@@ -1,19 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { userList } from '../store/reducers/usersReducer'
-import { getUsers, addUser } from '../store/actions/usersActions'
-import Form from './Form'
+import { getUsers } from '../store/actions/usersActions'
 
 
 function Content() {
     const users = useSelector(state => state.users.users);
     const dispatch = useDispatch()
 
-    useEffect(() => {
-        dispatch(getUsers())
-    },
-        []
-    );
+    useEffect(() => { dispatch(getUsers()) }, []);
 
     return (
         <div>
@@ -21,7 +15,8 @@ function Content() {
             <div>
                 {users.length > 0 ?
                     <div>
-                        {users.map(user => <div key={user.id}>{user.username}</div>)}
+                        {users.map(user => <div key={user.id}>{user.username}</div>
+                        )}
                     </div>
                     :
                     <div>
@@ -29,7 +24,6 @@ function Content() {
                     </div>
                 }
             </div>
-            <Form />
         </div>
     )
 }

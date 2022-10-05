@@ -13,11 +13,11 @@ class UserProfile(AbstractUser):
     )
 
     avatar = models.ImageField(upload_to='users_avatars', blank=True)
-    age = models.PositiveIntegerField(verbose_name='возраст', blank=True)
+    age = models.PositiveIntegerField(verbose_name='возраст', blank=True, null=True)
     gender = models.CharField(max_length=1, verbose_name='пол', choices=GENDER_CHOICES, blank=True)
     about_me = models.TextField(max_length=512, verbose_name='обо мне', blank=True)
-    weight = models.PositiveIntegerField(verbose_name='вес', blank=True)
-    height = models.PositiveIntegerField(verbose_name='рост', blank=True)
+    weight = models.PositiveIntegerField(verbose_name='вес', blank=True, null=True)
+    height = models.PositiveIntegerField(verbose_name='рост', blank=True, null=True)
 
     # @receiver(post_save, sender=ShopUser)
     # def create_user_profile(sender, instance, created, **kwargs):
