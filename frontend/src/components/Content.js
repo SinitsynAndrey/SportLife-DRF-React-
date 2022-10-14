@@ -1,29 +1,26 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getUsers } from '../store/actions/usersActions'
 
+import { logout } from '../store/slices/userSlice';
+import WithoutLogin from './WithoutLogin';
+import { setData } from '../store/slices/userSlice';
 
 function Content() {
-    const users = useSelector(state => state.users.users);
+    const user = useSelector(state => state.user.user);
     const dispatch = useDispatch()
 
-    useEffect(() => { dispatch(getUsers()) }, []);
+    useEffect(() => { dispatch(setData()) }, [])
 
     return (
         <div>
-            <button onClick={() => dispatch(getUsers())}>users</button>
-            <div>
-                {users.length > 0 ?
-                    <div>
-                        {users.map(user => <div key={user.id}>{user.username}</div>
-                        )}
-                    </div>
-                    :
-                    <div>
-                        Loading...
-                    </div>
-                }
-            </div>
+            {user ?
+                <div>
+                    {user.username}
+                    <button className='btn' onClick={() => dispatch(logout())}>Logout</button>
+                </div>
+            :
+            <WithoutLogin/>
+            }
         </div>
     )
 }

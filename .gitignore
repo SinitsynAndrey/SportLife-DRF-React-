@@ -130,6 +130,6 @@ GitHub.sublime-settings
 !.vscode/launch.json
 !.vscode/extensions.json
 .history
-
+test.py
 #Node js
 node_modules

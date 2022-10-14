@@ -6,3 +6,4 @@ class UserSerializer(ModelSerializer):
     class Meta:
         model = UserProfile
         fields = '__all__'
+        lookup_field = 'username'
