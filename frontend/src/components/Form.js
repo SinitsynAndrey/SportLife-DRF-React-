@@ -1,38 +1,40 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getTokenAction, getUserAction } from '../store/actions/userActions'
+import { getTokenAction } from '../store/actions/userActions'
 import { useForm } from 'react-hook-form'
 import { useAlert } from 'react-alert'
-import { useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 
-function Form() {
-    const state_token = useSelector(state => state.user.token)
+
+function LoginForm() {
     const errors = useSelector(state => state.user.errors);
-    const message = useSelector(state => state.user.message);
-    const { register, handleSubmit } = useForm();
+    const { register,
+        handleSubmit,
+        formState: { isValid }
+    } = useForm({mode: "onChange"});
     const dispatch = useDispatch();
     const alert = useAlert();
-    const navigate = useNavigate();
-
-    useEffect(() => {console.log(state_token)})
+    
+    useEffect(() => { 
+        if (errors.msg) {
+            console.log(errors)
+            alert.error("Неверные данные!");
+        }
+    }, [errors])
 
     const onSubmit = (data) => {
-            dispatch(getTokenAction(data));
-            if (state_token) {
-                dispatch(getUserAction(data.username, state_token.token));
-            }
-            if (errors.msg) {
-                alert.error("Неверные данные");
-            }
-            else {
-                alert.success("Добро пожаловать");
-                navigate('/');
-            }
+        dispatch(getTokenAction(data));
     }
 
     return (
-       <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmit)}>
+            <h3>Войти</h3>
+            {errors.msg &&
+                <div className='error'>
+                    {errors.msg.non_field_errors}
+                </div>
+            }
             <div className="mb-3">
                 <label className="form-label">Username</label>
                 {errors.msg &&
@@ -40,11 +42,11 @@ function Form() {
                         {errors.msg.username}
                     </div>
                 }
-                <input {...register('username')}
+                <input {...register('username', {required: 'tr'})}
                     type="username"
                     className="form-control"
                     aria-describedby="Username"
-                    />
+                />
             </div>
             <div className="mb-3">
                 <label className="form-label">Password</label>
@@ -56,11 +58,16 @@ function Form() {
                 <input {...register('password')}
                     type="password"
                     className="form-control"
-                    />
+                />
             </div>
-            <button type="submit" className="btn btn-primary">Submit</button>
+            <div>
+                <button type="submit" disabled={!isValid} className="btn btn-primary">Submit</button>
+                <Link to='/Registration' className='btn btn-secondary'>Registration</Link>
+            </div>
+
+
         </form >
     )
 }
 
-export default Form
+export default LoginForm

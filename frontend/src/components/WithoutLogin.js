@@ -1,10 +1,7 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import Form from './Form';
+import React from 'react';
+import LoginForm from './Form';
 
 function WithoutLogin() {
-    const user = useSelector(state => state.user.user);
-    const dispatch = useDispatch()
 
     return (
         <div>
@@ -22,7 +19,7 @@ function WithoutLogin() {
                     </p>
                 </div>
                 <div className='col-4 border rounded-4 p-3 m-3'>
-                    <Form />
+                    <LoginForm />
                 </div>
 
             </div>

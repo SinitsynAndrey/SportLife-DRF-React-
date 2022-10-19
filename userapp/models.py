@@ -18,12 +18,3 @@ class UserProfile(AbstractUser):
     about_me = models.TextField(max_length=512, verbose_name='обо мне', blank=True)
     weight = models.PositiveIntegerField(verbose_name='вес', blank=True, null=True)
     height = models.PositiveIntegerField(verbose_name='рост', blank=True, null=True)
-
-    # @receiver(post_save, sender=ShopUser)
-    # def create_user_profile(sender, instance, created, **kwargs):
-    #     if created:
-    #         ShopUserProfile.objects.create(user=instance)
-    #
-    # @receiver(post_save, sender=ShopUser)
-    # def save_user_profile(sender, instance, **kwargs):
-    #     instance.shopuserprofile.save()

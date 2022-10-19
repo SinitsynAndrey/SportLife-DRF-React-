@@ -3,13 +3,19 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { logout } from '../store/slices/userSlice';
 import WithoutLogin from './WithoutLogin';
-import { setData } from '../store/slices/userSlice';
+import Cookies from 'universal-cookie';
+import { getUserAction } from '../store/actions/userActions';
 
 function Content() {
     const user = useSelector(state => state.user.user);
     const dispatch = useDispatch()
 
-    useEffect(() => { dispatch(setData()) }, [])
+    useEffect(() => { 
+        const cookies = new Cookies();
+        if (cookies.get('token')) {
+            dispatch(getUserAction(cookies.get('token')))
+        }
+    }, [])
 
     return (
         <div>
