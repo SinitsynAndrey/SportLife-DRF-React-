@@ -38,12 +38,10 @@ export const getTokenAction = (data) => dispatch => {
 }
 
 export const registationAction = (user) => dispatch => {
-    console.log("0")
     dispatch(errors({
         msg: '',
         status: ''
     }))
-    console.log("1")
         axios.post('http://127.0.0.1:8000/auth/users/', user)
         .then(response => {
             dispatch(addUser(response.data))
