@@ -15,19 +15,33 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include, re_path
-from rest_framework import routers
+from rest_framework import routers, permissions
 from userapp.views import UserViewSet, CreateUserViewSet
-from rest_framework.authtoken import views
+
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
+
+schema_view = get_schema_view(
+    openapi.Info(
+        title="SportLife",
+        default_version='0.1',
+        description="Documentation to out project",
+        contact=openapi.Contact(email="andrey-sin@yandex.ru"),
+        license=openapi.License(name="MIT License"),
+    ),
+    public=True,
+    permission_classes=[permissions.AllowAny],
+)
 
 router = routers.DefaultRouter()
 router.register('user', UserViewSet)
 router.register('register', CreateUserViewSet)
-
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
     re_path(r'^auth/', include('djoser.urls')),
     re_path(r'^auth/', include('djoser.urls.authtoken')),
+    path('docs/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('api/', include(router.urls)),
 ]

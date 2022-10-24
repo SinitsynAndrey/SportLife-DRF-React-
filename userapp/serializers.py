@@ -2,7 +2,7 @@ from rest_framework.serializers import ModelSerializer
 from userapp.models import UserProfile
 
 
-class UserSerializer(ModelSerializer):
+class CustomUserSerializer(ModelSerializer):
     class Meta:
         model = UserProfile
         fields = ['username', 'password', 'first_name', 'last_name', 'email',
